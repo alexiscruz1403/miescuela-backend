@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rol_usuarios",
+  "info": {
+    "singularName": "rol-usuario",
+    "pluralName": "rol-usuarios",
+    "displayName": "RolUsuario"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre_rol": {
+      "type": "string"
+    },
+    "modulos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::modulo.modulo",
+      "mappedBy": "rol_usuarios"
+    }
+  }
+}

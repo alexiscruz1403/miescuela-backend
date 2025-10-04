@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "asistencias",
+  "info": {
+    "singularName": "asistencia",
+    "pluralName": "asistencias",
+    "displayName": "Asistencia"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "alumno": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::alumno.alumno"
+    },
+    "estado": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::asistencia-estado.asistencia-estado"
+    },
+    "fecha": {
+      "type": "date",
+      "required": false,
+      "default": "2025-10-03"
+    },
+    "observaciones": {
+      "type": "string"
+    },
+    "creado_el": {
+      "type": "datetime",
+      "private": true
+    },
+    "actualizado_el": {
+      "type": "datetime",
+      "private": true
+    }
+  }
+}

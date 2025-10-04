@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "asistencia_estados",
+  "info": {
+    "singularName": "asistencia-estado",
+    "pluralName": "asistencia-estados",
+    "displayName": "AsistenciaEstado"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "descripcion": {
+      "type": "string"
+    },
+    "detalle": {
+      "type": "string"
+    }
+  }
+}

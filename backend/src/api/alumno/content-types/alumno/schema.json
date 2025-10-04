@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "alumnos",
+  "info": {
+    "singularName": "alumno",
+    "pluralName": "alumnos",
+    "displayName": "Alumno"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "curso": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::curso.curso"
+    }
+  }
+}

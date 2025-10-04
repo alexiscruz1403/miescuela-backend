@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cursos",
+  "info": {
+    "singularName": "curso",
+    "pluralName": "cursos",
+    "displayName": "Curso"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "division": {
+      "type": "string",
+      "required": true
+    },
+    "anio_escolar": {
+      "type": "integer",
+      "required": true
+    },
+    "creado_el": {
+      "type": "datetime",
+      "private": true
+    },
+    "actualizado_el": {
+      "type": "datetime",
+      "private": true
+    }
+  }
+}
