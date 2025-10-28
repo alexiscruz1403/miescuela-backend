@@ -1,0 +1,1162 @@
+<definitions name="MiEscuelaService"
+    targetNamespace="http://miescuela.com/soap"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://miescuela.com/soap"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Headers -->
+    <message name="AuthHeader">
+        <part name="accessToken" type="xsd:string"/>
+        <part name="csrfToken" type="xsd:string"/>
+    </message>
+
+    <message name="rootRequest">
+        <part name="params" type="xsd:string"/>
+    </message>
+    <message name="rootResponse">
+        <part name="resultado" type="xsd:string"/>
+    </message>
+
+    <!-- Tipos de datos complejos -->
+    <xsd:complexType name="AsistenciaItem">
+        <xsd:sequence>
+            <xsd:element name="id_alumno" type="xsd:int"/>
+            <xsd:element name="id_estado" type="xsd:int"/>
+            <xsd:element name="observaciones" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AsistenciaItems">
+        <xsd:sequence>
+            <xsd:element name="item" type="tns:AsistenciaItem" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CalificacionItem">
+        <xsd:sequence>
+            <xsd:element name="id_calificacion" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="id_alumno" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="id_materia" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="id_curso" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="id_docente" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="id_tipo_calificacion" type="xsd:int"/>
+            <xsd:element name="nota" type="xsd:decimal"/>
+            <xsd:element name="observaciones" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Lista de calificaciones -->
+    <xsd:complexType name="CalificacionItems">
+    <xsd:sequence>
+        <xsd:element name="item" type="tns:CalificacionItem" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Métodos de autenticación -->
+    <message name="loginRequest">
+        <part name="email" type="xsd:string"/>
+        <part name="contrasenia" type="xsd:string"/>
+    </message>
+    <message name="loginResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="refreshRequest">
+        <part name="refreshToken" type="xsd:string"/>
+    </message>
+    <message name="refreshResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="logoutRequest">
+        <part name="token" type="xsd:string"/>
+    </message>
+    <message name="logoutResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de alumnos -->
+    <message name="obtenerAlumnosRequest">
+        <part name="id_curso" type="xsd:int"/>
+    </message>
+    <message name="obtenerAlumnosResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerAlumnosCursoPorFechaRequest">
+        <part name="id_curso" type="xsd:int"/>
+        <part name="fecha" type="xsd:date"/>
+    </message>
+    <message name="obtenerAlumnosCursoPorFechaResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de asesor pedagógico -->
+    <message name="obtenerAsesoresPedagogicosRequest">
+        <!-- No tiene parámetros -->
+    </message>
+    <message name="obtenerAsesoresPedagogicosResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de asistencia -->
+    <message name="tomarAsistenciaCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+        <part name="fecha" type="xsd:string"/>
+        <part name="items" type="tns:AsistenciaItems"/>
+    </message>
+    <message name="tomarAsistenciaCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerAsistenciasCursoFechaRequest">
+        <part name="id_curso" type="xsd:int"/>
+        <part name="fecha" type="xsd:date"/>
+    </message>
+    <message name="obtenerAsistenciasCursoFechaResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerAsistenciasCursoEntreFechasRequest">
+        <part name="id_curso" type="xsd:int"/>
+        <part name="desde" type="xsd:date"/>
+        <part name="hasta" type="xsd:date"/>
+    </message>
+    <message name="obtenerAsistenciasCursoEntreFechasResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerAsistenciasAlumnoEntreFechasRequest">
+        <part name="id_alumno" type="xsd:int"/>
+        <part name="desde" type="xsd:date"/>
+        <part name="hasta" type="xsd:date"/>
+    </message>
+    <message name="obtenerAsistenciasAlumnoEntreFechasResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="eliminarAsistenciasCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+        <part name="fecha" type="xsd:date"/>
+    </message>
+    <message name="eliminarAsistenciasCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerPromedioAsistenciasCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+        <part name="desde" type="xsd:date"/>
+        <part name="hasta" type="xsd:date"/>
+    </message>
+    <message name="obtenerPromedioAsistenciasCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de asistencia estado -->
+    <message name="obtenerEstadosRequest">
+
+    </message>
+    <message name="obtenerEstadosResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de calificaciones -->
+    <message name="obtenerCalificacionesRequest">
+        <part name="id_curso" type="xsd:int"/>
+        <part name="id_materia" type="xsd:int"/>
+        <part name="id_alumno" type="xsd:int"/>
+    </message>
+    <message name="obtenerCalificacionesResponse">
+        <part name="calificaciones" type="tns:string"/>
+    </message>
+
+    <message name="obtenerCalificacionesPorAlumnoRequest">
+        <part name="id_alumno" type="xsd:int"/>
+    </message>
+    <message name="obtenerCalificacionesPorAlumnoResponse">
+        <part name="calificaciones" type="tns:string"/>
+    </message>
+
+    <message name="obtenerTiposCalificacionRequest"/>
+        
+    </message>
+    <message name="obtenerTiposCalificacionResponse">
+        <part name="tipos" type="tns:string"/>
+    </message>
+
+    <message name="actualizarCalificacionesRequest">
+        <part name="calificaciones" type="tns:calificacionItems"/>
+    </message>
+    <message name="actualizarCalificacionesResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="crearCalificacionesRequest">
+        <part name="calificaciones" type="tns:calificacionItems"/>
+    </message>
+    <message name="crearCalificacionesResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de ciclos lectivos -->
+    <message name="obtenerCiclosRequest">
+        <part name="page" type="xsd:int" minOccurs="0"/>
+        <part name="perPage" type="xsd:int" minOccurs="0"/>
+        <part name="anio" type="xsd:string" minOccurs="0"/>
+        <part name="estado" type="xsd:string" minOccurs="0"/>
+    </message>
+    <message name="obtenerCiclosResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerCicloRequest">
+        <part name="id_ciclo" type="xsd:int"/>
+    </message>
+    <message name="obtenerCicloResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="crearCicloRequest">
+        <part name="anio" type="xsd:string"/>
+        <part name="fecha_inicio" type="xsd:date"/>
+        <part name="fecha_fin" type="xsd:date"/>
+        <part name="estado" type="xsd:string"/>
+    </message>
+    <message name="crearCicloResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="actualizarCicloRequest">
+        <part name="id_ciclo" type="xsd:int"/>
+        <part name="anio" type="xsd:string" minOccurs="0"/>
+        <part name="fecha_inicio" type="xsd:date" minOccurs="0"/>
+        <part name="fecha_fin" type="xsd:date" minOccurs="0"/>
+        <part name="estado" type="xsd:string" minOccurs="0"/>
+    </message>
+    <message name="actualizarCicloResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="eliminarCicloRequest">
+        <part name="id_ciclo" type="xsd:int"/>
+    </message>
+    <message name="eliminarCicloResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de cursos -->
+    <message name="obtenerCursosRequest">
+        <!-- No tiene parámetros -->
+    </message>
+    <message name="obtenerCursosResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerCursosRestringidoRequest">
+        <!-- No tiene parámetros -->
+    </message>
+    <message name="obtenerCursosRestringidoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+    </message>
+    <message name="obtenerCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="crearCursoRequest">
+        <part name="anio_escolar" type="xsd:int"/>
+        <part name="division" type="xsd:string"/>
+        <part name="id_ciclo" type="xsd:int"/>
+    </message>
+    <message name="crearCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="actualizarCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+        <part name="anio_escolar" type="xsd:int" minOccurs="0"/>
+        <part name="division" type="xsd:string" minOccurs="0"/>
+        <part name="id_ciclo" type="xsd:int" minOccurs="0"/>
+    </message>
+    <message name="actualizarCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="eliminarCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+    </message>
+    <message name="eliminarCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerMateriasPorCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+    </message>
+    <message name="obtenerMateriasPorCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerAlumnosPorCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+    </message>
+    <message name="obtenerAlumnosPorCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerDocentesPorCursoRequest">
+        <part name="id_curso" type="xsd:int"/>
+    </message>
+    <message name="obtenerDocentesPorCursoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de informes pedagógicos -->
+    <message name="obtenerInformesPedagogicosRequest">
+        <part name="id_alumno" type="xsd:int"/>
+        <part name="id_curso" type="xsd:int"/>
+        <part name="id_materia" type="xsd:int"/>
+    </message>
+    <message name="obtenerInformesPedagogicosResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="crearInformePedagogicoRequest">
+        <part name="id_alumno" type="xsd:int"/>
+        <part name="id_curso" type="xsd:int"/>
+        <part name="id_materia" type="xsd:int"/>
+        <part name="id_asesor" type="xsd:int"/>
+        <part name="contenido" type="xsd:string"/>
+    </message>
+    <message name="crearInformePedagogicoResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de materias -->
+    <message name="obtenerMateriasRequest">
+        <part name="page" type="xsd:int"/>
+        <part name="perPage" type="xsd:int"/>
+        <part name="nombre" type="xsd:string"/>
+        <part name="descripcion" type="xsd:string"/>
+    </message>
+    <message name="obtenerMateriasResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerMateriaRequest">
+        <part name="id_materia" type="xsd:int"/>
+    </message>
+    <message name="obtenerMateriaResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="crearMateriaRequest">
+        <part name="nombre" type="xsd:string"/>
+        <part name="descripcion" type="xsd:string"/>
+    </message>
+    <message name="crearMateriaResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="actualizarMateriaRequest">
+        <part name="id_materia" type="xsd:int"/>
+        <part name="nombre" type="xsd:string" minOccurs="0"/>
+        <part name="descripcion" type="xsd:string" minOccurs="0"/>
+    </message>
+    <message name="actualizarMateriaResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="eliminarMateriaRequest">
+        <part name="id_materia" type="xsd:int"/>
+    </message>
+    <message name="eliminarMateriaResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="asignarCursoAMateriaRequest">
+        <part name="id_materia" type="xsd:int"/>
+        <part name="id_curso" type="xsd:int"/>
+    </message>
+    <message name="asignarCursoAMateriaResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="desasignarCursoDeMateriaRequest">
+        <part name="id_materia" type="xsd:int"/>
+        <part name="id_curso" type="xsd:int"/>
+    </message>
+    <message name="desasignarCursoDeMateriaResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de roles -->
+    <message name="obtenerRolesRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="obtenerRolesResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de tutores -->
+    <message name="obtenerHijosRequest">
+        <!-- No tiene parámetros -->
+    </message>
+    <message name="obtenerHijosResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <!-- Métodos de usuarios -->
+    <message name="obtenerUsuariosRequest">
+        <part name="page" type="xsd:int"/>
+        <part name="perPage" type="xsd:int"/>
+        <part name="numero_documento" type="xsd:string"/>
+        <part name="id_rol" type="xsd:int"/>
+    </message>
+    <message name="obtenerUsuariosResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerUsuariosSinRolRequest">
+        <part name="page" type="xsd:int"/>
+        <part name="perPage" type="xsd:int"/>
+        <part name="nombre" type="xsd:string"/>
+        <part name="apellido" type="xsd:string"/>
+        <part name="numero_documento" type="xsd:string"/>
+        <part name="sort" type="xsd:string"/>
+        <part name="order" type="xsd:string"/>
+    </message>
+    <message name="obtenerUsuariosSinRolResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerUsuariosConRolRequest">
+        <part name="page" type="xsd:int"/>
+        <part name="perPage" type="xsd:int"/>
+        <part name="nombre" type="xsd:string"/>
+        <part name="apellido" type="xsd:string"/>
+        <part name="numero_documento" type="xsd:string"/>
+        <part name="id_rol" type="xsd:int"/> 
+        <part name="sort" type="xsd:string"/>
+        <part name="order" type="xsd:string"/>      
+    </message>
+    <message name="obtenerUsuariosConRolResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="obtenerUsuarioRequest">
+        <part name="id_usuario" type="xsd:int"/>
+    </message>
+    <message name="obtenerUsuarioResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="crearUsuarioRequest">
+        <part name="nombre" type="xsd:string"/>
+        <part name="apellido" type="xsd:string"/>
+        <part name="numero_documento" type="xsd:string"/>
+        <part name="legajo" type="xsd:string"/>
+        <part name="email" type="xsd:string"/>
+        <part name="contrasenia" type="xsd:string"/>
+        <part name="telefono" type="xsd:string"/>
+        <part name="domicilio" type="xsd:string"/>
+        <part name="genero" type="xsd:string"/>
+        <part name="fecha_nacimiento" type="xsd:date"/>
+    </message>
+    <message name="crearUsuarioResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="actualizarUsuarioRequest">
+        <part name="id_usuario" type="xsd:int"/>
+        <part name="nombre" type="xsd:string"/>
+        <part name="apellido" type="xsd:string"/>
+        <part name="numero_documento" type="xsd:string"/>
+        <part name="legajo" type="xsd:string"/>
+        <part name="email" type="xsd:string"/>
+        <part name="contrasenia" type="xsd:string"/>
+        <part name="telefono" type="xsd:string"/>
+        <part name="domicilio" type="xsd:string"/>
+        <part name="genero" type="xsd:string"/>
+        <part name="fecha_nacimiento" type="xsd:date"/>
+    </message>
+    <message name="actualizarUsuarioResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="eliminarUsuarioRequest">
+        <part name="id_usuario" type="xsd:int"/>
+    </message>
+    <message name="eliminarUsuarioResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="asignarRolAUsuarioRequest">
+        <part name="id_usuario" type="xsd:int"/>
+        <part name="id_rol" type="xsd:int"/>
+    </message>
+    <message name="asignarRolAUsuarioResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <message name="desasignarRolDeUsuarioRequest">
+        <part name="id_usuario" type="xsd:int"/>
+    </message>
+    <message name="desasignarRolDeUsuarioResponse">
+        <part name="response" type="xsd:string"/>
+    </message>
+
+    <portType name="MiEscuelaPort">
+        <operation name="rootMessage">
+            <input message="tns:rootRequest"/>
+            <output message="tns:rootResponse"/>
+        </operation>
+
+        <!-- Métodos de autenticación -->
+        <operation name="login">
+            <input message="tns:loginRequest"/>
+            <output message="tns:loginResponse"/>
+        </operation>
+        <operation name="refresh">
+            <input message="tns:refreshRequest"/>
+            <output message="tns:refreshResponse"/>
+        </operation>
+        <operation name="logout">
+            <input message="tns:logoutRequest"/>
+            <output message="tns:logoutResponse"/>
+        </operation>
+
+        <!-- Métodos de gestión de alumnos -->
+        <operation name="obtenerAlumnos">
+            <input message="tns:obtenerAlumnosRequest"/>
+            <output message="tns:obtenerAlumnosResponse"/>
+        </operation>
+
+        <operation name="obtenerAlumnosCursoPorFecha">
+            <input message="tns:obtenerAlumnosCursoPorFechaRequest"/>
+            <output message="tns:obtenerAlumnosCursoPorFechaResponse"/>
+        </operation>
+
+        <!-- Métodos de asesor pedagógico -->
+        <operation name="obtenerAsesoresPedagogicos">
+            <input message="tns:obtenerAsesoresPedagogicosRequest"/>
+            <output message="tns:obtenerAsesoresPedagogicosResponse"/>
+        </operation>
+
+        <!-- Métodos de asistencia -->
+        <operation name="tomarAsistenciaCurso">
+            <input message="tns:tomarAsistenciaCursoRequest"/>
+            <output message="tns:tomarAsistenciaCursoResponse"/>
+        </operation>
+
+        <operation name="obtenerAsistenciasCursoFecha">
+            <input message="tns:obtenerAsistenciasCursoFechaRequest"/>
+            <output message="tns:obtenerAsistenciasCursoFechaResponse"/>
+        </operation>
+
+        <operation name="obtenerAsistenciasCursoEntreFechas">
+            <input message="tns:obtenerAsistenciasCursoEntreFechasRequest"/>
+            <output message="tns:obtenerAsistenciasCursoEntreFechasResponse"/>
+        </operation>
+
+        <operation name="obtenerAsistenciasAlumnoEntreFechas">
+            <input message="tns:obtenerAsistenciasAlumnoEntreFechasRequest"/>
+            <output message="tns:obtenerAsistenciasAlumnoEntreFechasResponse"/>
+        </operation>
+        
+        <operation name="eliminarAsistenciasCurso">
+            <input message="tns:eliminarAsistenciasCursoRequest"/>
+            <output message="tns:eliminarAsistenciasCursoResponse"/>
+        </operation>
+
+        <operation name="obtenerPromedioAsistenciasCurso">
+            <input message="tns:obtenerPromedioAsistenciasCursoRequest"/>
+            <output message="tns:obtenerPromedioAsistenciasCursoResponse"/>
+        </operation>
+
+        <!-- Métodos de asistencia estado -->
+        <operation name="obtenerEstados">
+            <input message="tns:obtenerEstadosRequest"/>
+            <output message="tns:obtenerEstadosResponse"/>
+        </operation>
+
+        <!-- Métodos de calificaciones -->
+        <operation name="obtenerCalificaciones">
+            <input message="tns:obtenerCalificacionesRequest"/>
+            <output message="tns:obtenerCalificacionesResponse"/>
+        </operation>
+
+        <operation name="obtenerCalificacionesPorAlumno">
+            <input message="tns:obtenerCalificacionesPorAlumnoRequest"/>
+            <output message="tns:obtenerCalificacionesPorAlumnoResponse"/>
+        </operation>
+
+        <operation name="obtenerTiposCalificacion">
+            <input message="tns:obtenerTiposCalificacionRequest"/>
+            <output message="tns:obtenerTiposCalificacionResponse"/>
+        </operation>
+
+        <operation name="actualizarCalificaciones">
+            <input message="tns:actualizarCalificacionesRequest"/>
+            <output message="tns:actualizarCalificacionesResponse"/>
+        </operation>
+
+        <operation name="crearCalificaciones">
+            <input message="tns:crearCalificacionesRequest"/>
+            <output message="tns:crearCalificacionesResponse"/>
+        </operation>
+
+        <!-- Métodos de ciclos lectivos -->
+        <operation name="obtenerCiclos">
+            <input message="tns:obtenerCiclosRequest"/>
+            <output message="tns:obtenerCiclosResponse"/>
+        </operation>
+
+        <operation name="obtenerCiclo">
+            <input message="tns:obtenerCicloRequest"/>
+            <output message="tns:obtenerCicloResponse"/>
+        </operation>
+
+        <operation name="crearCiclo">
+            <input message="tns:crearCicloRequest"/>
+            <output message="tns:crearCicloResponse"/>
+        </operation>
+
+        <operation name="actualizarCiclo">
+            <input message="tns:actualizarCicloRequest"/>
+            <output message="tns:actualizarCicloResponse"/>
+        </operation>
+
+        <operation name="eliminarCiclo">
+            <input message="tns:eliminarCicloRequest"/>
+            <output message="tns:eliminarCicloResponse"/>
+        </operation>
+
+        <!-- Métodos de cursos -->
+        <operation name="obtenerCursos">
+            <input message="tns:obtenerCursosRequest"/>
+            <output message="tns:obtenerCursosResponse"/>
+        </operation>
+
+        <operation name="obtenerCursosRestringido">
+            <input message="tns:obtenerCursosRestringidoRequest"/>
+            <output message="tns:obtenerCursosRestringidoResponse"/>
+        </operation>
+
+        <operation name="obtenerCurso">
+            <input message="tns:obtenerCursoRequest"/>
+            <output message="tns:obtenerCursoResponse"/>
+        </operation>
+
+        <operation name="crearCurso">
+            <input message="tns:crearCursoRequest"/>
+            <output message="tns:crearCursoResponse"/>
+        </operation>
+
+        <operation name="actualizarCurso">
+            <input message="tns:actualizarCursoRequest"/>
+            <output message="tns:actualizarCursoResponse"/>
+        </operation>
+
+        <operation name="eliminarCurso">
+            <input message="tns:eliminarCursoRequest"/>
+            <output message="tns:eliminarCursoResponse"/>
+        </operation>
+
+        <operation name="obtenerMateriasPorCurso">
+            <input message="tns:obtenerMateriasPorCursoRequest"/>
+            <output message="tns:obtenerMateriasPorCursoResponse"/>
+        </operation>
+
+        <operation name="obtenerAlumnosPorCurso">
+            <input message="tns:obtenerAlumnosPorCursoRequest"/>
+            <output message="tns:obtenerAlumnosPorCursoResponse"/>
+        </operation>
+
+        <operation name="obtenerDocentesPorCurso">
+            <input message="tns:obtenerDocentesPorCursoRequest"/>
+            <output message="tns:obtenerDocentesPorCursoResponse"/>
+        </operation>
+
+        <!-- Métodos de informes pedagógicos -->
+        <operation name="obtenerInformesPedagogicos">
+            <input message="tns:obtenerInformesPedagogicosRequest"/>
+            <output message="tns:obtenerInformesPedagogicosResponse"/>
+        </operation>
+
+        <operation name="crearInformePedagogico">
+            <input message="tns:crearInformePedagogicoRequest"/>
+            <output message="tns:crearInformePedagogicoResponse"/>
+        </operation>
+
+        <!-- Métodos de materias -->
+        <operation name="obtenerMaterias">
+            <input message="tns:obtenerMateriasRequest"/>
+            <output message="tns:obtenerMateriasResponse"/>
+        </operation>
+
+        <operation name="obtenerMateria">
+            <input message="tns:obtenerMateriaRequest"/>
+            <output message="tns:obtenerMateriaResponse"/>
+        </operation>
+
+        <operation name="crearMateria">
+            <input message="tns:crearMateriaRequest"/>
+            <output message="tns:crearMateriaResponse"/>
+        </operation>
+
+        <operation name="actualizarMateria">
+            <input message="tns:actualizarMateriaRequest"/>
+            <output message="tns:actualizarMateriaResponse"/>
+        </operation>
+
+        <operation name="eliminarMateria">
+            <input message="tns:eliminarMateriaRequest"/>
+            <output message="tns:eliminarMateriaResponse"/>
+        </operation>
+
+        <operation name="asignarCursoAMateria">
+            <input message="tns:asignarCursoAMateriaRequest"/>
+            <output message="tns:asignarCursoAMateriaResponse"/>
+        </operation>
+
+        <operation name="desasignarCursoDeMateria">
+            <input message="tns:desasignarCursoDeMateriaRequest"/>
+            <output message="tns:desasignarCursoDeMateriaResponse"/>
+        </operation>
+
+        <!-- Métodos de roles -->
+        <operation name="obtenerRoles">
+            <input message="tns:obtenerRolesRequest"/>
+            <output message="tns:obtenerRolesResponse"/>
+        </operation>
+
+        <!-- Métodos de tutores -->
+        <operation name="obtenerHijos">
+            <input message="tns:obtenerHijosRequest"/>
+            <output message="tns:obtenerHijosResponse"/>
+        </operation>
+
+        <!-- Métodos de usuarios -->
+        <operation name="obtenerUsuarios">
+            <input message="tns:obtenerUsuariosRequest"/>
+            <output message="tns:obtenerUsuariosResponse"/>
+        </operation>
+
+        <operation name="obtenerUsuariosSinRol">
+            <input message="tns:obtenerUsuariosSinRolRequest"/>
+            <output message="tns:obtenerUsuariosSinRolResponse"/>
+        </operation>
+
+        <operation name="obtenerUsuariosConRol">
+            <input message="tns:obtenerUsuariosConRolRequest"/>
+            <output message="tns:obtenerUsuariosConRolResponse"/>
+        </operation>
+
+        <operation name="obtenerUsuario">
+            <input message="tns:obtenerUsuarioRequest"/>
+            <output message="tns:obtenerUsuarioResponse"/>
+        </operation>
+
+        <operation name="crearUsuario">
+            <input message="tns:crearUsuarioRequest"/>
+            <output message="tns:crearUsuarioResponse"/>
+        </operation>
+
+        <operation name="actualizarUsuario">
+            <input message="tns:actualizarUsuarioRequest"/>
+            <output message="tns:actualizarUsuarioResponse"/>
+        </operation>
+
+        <operation name="eliminarUsuario">
+            <input message="tns:eliminarUsuarioRequest"/>
+            <output message="tns:eliminarUsuarioResponse"/>
+        </operation>
+
+        <operation name="asignarRolAUsuario">
+            <input message="tns:asignarRolAUsuarioRequest"/>
+            <output message="tns:asignarRolAUsuarioResponse"/>
+        </operation>
+
+        <operation name="desasignarRolDeUsuario">
+            <input message="tns:desasignarRolDeUsuarioRequest"/>
+            <output message="tns:desasignarRolDeUsuarioResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="MiEscuelaBinding" type="tns:MiEscuelaPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="rootMessage">
+            <soap:operation soapAction="http://miescuela.com/soap/rootMessage"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de autenticación -->
+        <operation name="login">
+            <soap:operation soapAction="http://miescuela.com/soap/login"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="refresh">
+            <soap:operation soapAction="http://miescuela.com/soap/refresh"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="logout">
+            <soap:operation soapAction="http://miescuela.com/soap/logout"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de gestión de alumnos -->
+        <operation name="obtenerAlumnos">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerAlumnos"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerAlumnosCursoPorFecha">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerAlumnosCursoPorFecha"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de asesor pedagógico -->
+        <operation name="obtenerAsesoresPedagogicos">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerAsesoresPedagogicos"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de asistencia -->
+        <operation name="tomarAsistenciaCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/tomarAsistenciaCurso"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+        <operation name="obtenerAsistenciasCursoFecha">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerAsistenciasCursoFecha"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+        <operation name="obtenerAsistenciasCursoEntreFechas">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerAsistenciasCursoEntreFechas"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+        <operation name="obtenerAsistenciasAlumnoEntreFechas">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerAsistenciasAlumnoEntreFechas"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+        <operation name="eliminarAsistenciasCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/eliminarAsistenciasCurso"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+        <operation name="obtenerPromedioAsistenciasCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerPromedioAsistenciasCurso"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+        <!-- Métodos de asistencia estado -->
+        <operation name="obtenerEstados">
+            <soap:operation soapAction="http://miescuela.com/soap#obtenerEstados" style="rpc"/>
+            <input>
+                <soap:body use="encoded" namespace="http://miescuela.com/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="http://miescuela.com/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+        <!-- Métodos de calificaciones -->
+        <operation name="obtenerCalificaciones">
+            <soap:operation soapAction="obtenerCalificaciones"/>
+            <input><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerCalificacionesPorAlumno">
+            <soap:operation soapAction="obtenerCalificacionesPorAlumno"/>
+            <input><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerTiposCalificacion">
+            <soap:operation soapAction="obtenerTiposCalificacion"/>
+            <input><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="actualizarCalificaciones">
+            <soap:operation soapAction="actualizarCalificaciones"/>
+            <input><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+        <operation name="crearCalificaciones">
+            <soap:operation soapAction="crearCalificaciones"/>
+            <input><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:calificaciones" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de ciclos lectivos -->
+        <operation name="obtenerCiclos">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerCiclos"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerCiclo">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerCiclo"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="crearCiclo">
+            <soap:operation soapAction="http://miescuela.com/soap/crearCiclo"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="actualizarCiclo">
+            <soap:operation soapAction="http://miescuela.com/soap/actualizarCiclo"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="eliminarCiclo">
+            <soap:operation soapAction="http://miescuela.com/soap/eliminarCiclo"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de cursos -->
+        <operation name="obtenerCursos">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerCursos"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerCursosRestringido">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerCursosRestringido"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerCurso"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="crearCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/crearCurso"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="actualizarCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/actualizarCurso"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="eliminarCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/eliminarCurso"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerMateriasPorCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerMateriasPorCurso"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerAlumnosPorCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerAlumnosPorCurso"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerDocentesPorCurso">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerDocentesPorCurso"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de informes pedagógicos -->
+        <operation name="obtenerInformesPedagogicos">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerInformesPedagogicos"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="crearInformePedagogico">
+            <soap:operation soapAction="http://miescuela.com/soap/crearInformePedagogico"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de materias -->
+        <operation name="obtenerMaterias">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerMaterias"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerMateria">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerMateria"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="crearMateria">
+            <soap:operation soapAction="http://miescuela.com/soap/crearMateria"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="actualizarMateria">
+            <soap:operation soapAction="http://miescuela.com/soap/actualizarMateria"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="eliminarMateria">
+            <soap:operation soapAction="http://miescuela.com/soap/eliminarMateria"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="asignarCursoAMateria">
+            <soap:operation soapAction="http://miescuela.com/soap/asignarCursoAMateria"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="desasignarCursoDeMateria">
+            <soap:operation soapAction="http://miescuela.com/soap/desasignarCursoDeMateria"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de roles -->
+        <operation name="obtenerRoles">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerRoles"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de tutores -->
+        <operation name="obtenerHijos">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerHijos"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <!-- Métodos de usuarios -->
+        <operation name="obtenerUsuarios">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerUsuarios"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerUsuariosSinRol">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerUsuariosSinRol"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerUsuariosConRol">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerUsuariosConRol"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="obtenerUsuario">
+            <soap:operation soapAction="http://miescuela.com/soap/obtenerUsuario"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="crearUsuario">
+            <soap:operation soapAction="http://miescuela.com/soap/crearUsuario"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="actualizarUsuario">
+            <soap:operation soapAction="http://miescuela.com/soap/actualizarUsuario"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="eliminarUsuario">
+            <soap:operation soapAction="http://miescuela.com/soap/eliminarUsuario"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="asignarRolAUsuario">
+            <soap:operation soapAction="http://miescuela.com/soap/asignarRolAUsuario"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="desasignarRolDeUsuario">
+            <soap:operation soapAction="http://miescuela.com/soap/desasignarRolDeUsuario"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+
+        <operation name="desasignarRolDeUsuario">
+            <soap:operation soapAction="http://miescuela.com/soap/desasignarRolDeUsuario"/>
+            <input><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+            <output><soap:body use="encoded" namespace="urn:MiEscuela" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+        </operation>
+    </binding>
+
+    <service name="MiEscuelaService">
+        <port name="MiEscuelaPort" binding="tns:MiEscuelaBinding">
+            <soap:address location="http://localhost:6543/soap"/>
+        </port>
+    </service>
+</definitions>

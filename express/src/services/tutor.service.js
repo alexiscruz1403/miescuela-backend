@@ -1,7 +1,6 @@
 import { Alumno, Tutor, Usuario, Curso } from "../models/index.js";
 
 export const getHijos = async (idTutor) => {
-    console.log("ID del tutor en getHijos:", idTutor); 
     const tutor = await Tutor.findOne({
         where: { id_tutor: idTutor },
         include: [

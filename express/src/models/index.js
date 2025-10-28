@@ -20,6 +20,9 @@ import { DocentesMateriasCurso } from "./DocentesMateriasCurso.js";
 import { TipoCalificacion } from "./TipoCalificacion.js";
 import { InformePedagogico } from "./InformePedagogico.js";
 import { AsesorPedagogico } from "./AsesorPedagogico.js";
+import { Director } from "./Director.js";
+import { Auxiliar } from "./Auxiliar.js";
+import { UsuarioRol } from "./UsuarioRol.js";
 
 // Alumno - usuario
 Alumno.belongsTo(Usuario, { foreignKey: "id_usuario", as: "usuario" });
@@ -230,9 +233,12 @@ export {
   AlumnoTutor,
   Administrador,
   Rol,
+  UsuarioRol,
   AuxiliaresCurso,
   CiclosLectivos,
   TipoCalificacion,
   InformePedagogico,
-  AsesorPedagogico
+  AsesorPedagogico,
+  Director,
+  Auxiliar
 };

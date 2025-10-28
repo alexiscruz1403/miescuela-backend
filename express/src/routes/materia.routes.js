@@ -18,7 +18,6 @@ router.patch('/:id_materia', materiaController.updateMateria);
 router.delete('/:id_materia', materiaController.deleteMateria);
 
 // Relaciones con cursos
-router.get('/:id_materia/cursos', materiaController.getCursosPorMateria);
 router.post('/:id_materia/cursos/:id_curso', materiaController.assignCursoAMateria);
 router.delete('/:id_materia/cursos/:id_curso', materiaController.unassignCursoDeMateria);
 
