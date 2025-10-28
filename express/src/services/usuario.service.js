@@ -1,15 +1,6 @@
-import { Usuario } from '../models/Usuario.js';
-import { Rol } from '../models/Rol.js';
-import { UsuarioRol } from '../models/UsuarioRol.js';
-import { Administrador } from "../models/Administrador.js";
-import { Director } from "../models/Director.js";
-import { Docente } from "../models/Docente.js";
-import { Auxiliar } from "../models/Auxiliar.js";
-import { AsesorPedagogico } from "../models/AsesorPedagogico.js";
-import { Alumno } from "../models/Alumno.js";
-import { Tutor } from "../models/Tutor.js";
+import { Usuario, Rol, UsuarioRol, Administrador, Director, Docente, Auxiliar, AsesorPedagogico, Alumno, Tutor } from '../models/index.js'; // Asegura que las asociaciones se configuren
 import { sequelize } from '../config/database.js';
-import { Op, where } from 'sequelize';
+import { Op } from 'sequelize';
 import bcrypt from 'bcrypt';
 import { DatabaseError } from '../utils/databaseError.util.js';
 

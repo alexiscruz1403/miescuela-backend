@@ -58,16 +58,6 @@ export const deleteMateria = async (req, res, next) => {
 }
 
 // Relaciones auxiliares
-export const getCursosPorMateria = async (req, res, next) => {
-    try {
-        const { id_materia } = req.params;
-        const cursos = await materiaService.getCursosPorMateria(id_materia);
-        res.status(200).json(cursos);
-    } catch (err) {
-        next(err);
-    }
-}
-
 export const assignCursoAMateria = async (req, res, next) => {
     try {
         const { id_materia, id_curso } = req.params;
