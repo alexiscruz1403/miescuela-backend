@@ -49,22 +49,6 @@ export const deleteMateria = async (id_materia) => {
 }
 
 // Relaciones auxiliares
-export const getCursosPorMateria = async (id_materia) => {
-    const cursos = await Curso.findAll({
-        include: [
-            {
-                model: MateriasCurso,
-                as: 'materiasCurso',
-                where: { id_materia },
-                attributes: [],
-            },
-        ],
-        attributes: ['id_curso', 'anio_escolar', 'division'],
-        order: [["anio_escolar", "ASC"], ["division", "ASC"]],
-    });
-    return cursos;
-}
-
 export const assignCursoAMateria = async (id_materia, id_curso) => {
     const [rel] = await MateriasCurso.findOrCreate({
         where: { id_materia, id_curso },

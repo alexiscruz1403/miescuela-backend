@@ -9,6 +9,21 @@ import "./models/index.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
 
+// ====================== SOAP ====================
+import soap from "soap";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { soapService } from "./soapService.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const wsdlPath = path.join(__dirname, "service.wsdl");
+const wsdl = fs.readFileSync(wsdlPath, "utf8");
+const SOAP_PATH = "/soap"; // ruta del servicio
+
+// =================================================
+
 // ====================== Rutas ===================
 import authRoutes from "./routes/auth.routes.js";
 import asistenciaRoutes from "./routes/asistencia.routes.js";
@@ -24,6 +39,22 @@ import cicloLectivoRoutes from "./routes/cicloLectivo.routes.js";
 import informePedagogicoRoutes from "./routes/informePedagogico.js";
 import asesorPedagogicoRoutes from "./routes/asesorPedagogico.routes.js";
 import estadisticasRoutes from "./routes/estadisticas.routes.js";
+// =================================================
+
+// ====================== Rutas SOAP ===================
+import alumnoSoapWrapperRoutes from "./routes/alumnoSoapWrapper.routes.js";
+import authSoapWrapperRoutes from "./routes/authSoapWrapper.routes.js";
+import asesorPedagogicoSoapWrapperRoutes from "./routes/asesorPedagogicoSoapWrapper.routes.js";
+import asistenciaSoapWrapperRoutes from "./routes/asistenciaSoapWrapper.routes.js";
+import asistenciaEstadoSoapWrapperRoutes from "./routes/asistenciaEstadoSoapWrapper.routes.js";
+import calificacionSoapWrapperRoutes from "./routes/calificacionSoapWrapper.routes.js";
+import cicloLectivoSoapWrapperRoutes from "./routes/cicloLectivoSoapWrapper.routes.js";
+import cursoSoapWrapperRoutes from "./routes/cursoSoapWrapper.routes.js";
+import informePedagogicoSoapWrapperRoutes from "./routes/informePedagogicoSoapWrapper.routes.js";
+import materiaSoapWrapperRoutes from "./routes/materiaSoapWrapper.routes.js";
+import rolSoapWrapperRoutes from "./routes/rolSoapWrapper.routes.js";
+import tutorSoapWrapperRoutes from "./routes/tutorSoapWrapper.routes.js";
+import usuarioSoapWrapperRoutes from "./routes/usuarioSoapWrapper.routes.js";
 // =================================================
 
 const app = express();
@@ -67,11 +98,30 @@ app.use("/api/ciclos-lectivos", cicloLectivoRoutes);
 app.use("/api/informes-pedagogicos", informePedagogicoRoutes);
 app.use("/api/asesores-pedagogicos", asesorPedagogicoRoutes);
 app.use("/api/estadisticas", estadisticasRoutes);
+
+
+// ──────────────── ROUTER SOAP ────────────────
+app.use("/soap/alumnos", alumnoSoapWrapperRoutes);
+app.use("/soap/auth", authSoapWrapperRoutes);
+app.use("/soap/asesores-pedagogicos", asesorPedagogicoSoapWrapperRoutes);
+app.use("/soap/asistencias", asistenciaSoapWrapperRoutes);
+app.use("/soap/asistencia-estados", asistenciaEstadoSoapWrapperRoutes);
+app.use("/soap/calificaciones", calificacionSoapWrapperRoutes);
+app.use("/soap/ciclos-lectivos", cicloLectivoSoapWrapperRoutes);
+app.use("/soap/cursos", cursoSoapWrapperRoutes);
+app.use("/soap/informes-pedagogicos", informePedagogicoSoapWrapperRoutes);
+app.use("/soap/materias", materiaSoapWrapperRoutes);
+app.use("/soap/roles", rolSoapWrapperRoutes);
+app.use("/soap/tutores", tutorSoapWrapperRoutes);
+app.use("/soap/usuarios", usuarioSoapWrapperRoutes);
+
 // ──────────────── Manejo de errores ────────────────
 app.use(errorHandler);
 
 // ──────────────── Arranque del servidor ────────────────
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
+
+soap.listen(app, SOAP_PATH, soapService, wsdl);
 
 app.listen(PORT, async () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
