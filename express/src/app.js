@@ -38,6 +38,7 @@ import tutorRoutes from "./routes/tutor.routes.js";
 import cicloLectivoRoutes from "./routes/cicloLectivo.routes.js";
 import informePedagogicoRoutes from "./routes/informePedagogico.js";
 import asesorPedagogicoRoutes from "./routes/asesorPedagogico.routes.js";
+import estadisticasRoutes from "./routes/estadisticas.routes.js";
 // =================================================
 
 // ====================== Rutas SOAP ===================
@@ -96,6 +97,8 @@ app.use("/api/tutores", tutorRoutes);
 app.use("/api/ciclos-lectivos", cicloLectivoRoutes);
 app.use("/api/informes-pedagogicos", informePedagogicoRoutes);
 app.use("/api/asesores-pedagogicos", asesorPedagogicoRoutes);
+app.use("/api/estadisticas", estadisticasRoutes);
+
 
 // ──────────────── ROUTER SOAP ────────────────
 app.use("/soap/alumnos", alumnoSoapWrapperRoutes);
@@ -111,6 +114,7 @@ app.use("/soap/materias", materiaSoapWrapperRoutes);
 app.use("/soap/roles", rolSoapWrapperRoutes);
 app.use("/soap/tutores", tutorSoapWrapperRoutes);
 app.use("/soap/usuarios", usuarioSoapWrapperRoutes);
+
 // ──────────────── Manejo de errores ────────────────
 app.use(errorHandler);
 
