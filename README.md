@@ -40,7 +40,7 @@ pg-hstore -> Utilidad que usa Sequelize para serializar objetos JSON en formato 
 
 soap -> Permite crear o consumir servicios SOAP en Node.js.
 
-📂 Estructura inicial de carpetas
+## Estructura inicial de carpetas
 express
 └── src
     ├── config/           # Configuración a la Base de Datos
