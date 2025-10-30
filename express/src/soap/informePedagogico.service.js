@@ -75,16 +75,29 @@ export const soapInformePedagogicoService = {
                     }
                 ],
                 where: informeWhereClause,
-                order: [['fecha', 'DESC']]
+                order: [['fecha', 'DESC']],
             })
 
-            return { response: JSON.stringify(informes) };
+            const plainInformes = informes.map(informe => informe.get({ plain: true }));
+
+            const mappedData = plainInformes.map(informe => ({
+                id_informe: informe.id_informe,
+                contenido: informe.contenido,
+                fecha: informe.fecha,
+                asesorPedagogico: informe.asesorPedagogico.usuario,
+                alumno: informe.alumno.usuario,
+                docente: informe.docente.usuario,
+                materia: informe.materiaCurso.materia,
+                curso: informe.materiaCurso.curso
+            }));
+            return { response: JSON.stringify(mappedData) };
         }catch(error){
             console.error("Error al obtener los informes pedagógicos:", error);
             return { response: "Error obteniendo los informes pedagógicos" };
         }
     },
     async crearInformePedagogico(args) {
+        console.log("Args recibidos para crear informe pedagógico:", args);
         try{
             let idAsesor = null;
             const user = args.usuario;

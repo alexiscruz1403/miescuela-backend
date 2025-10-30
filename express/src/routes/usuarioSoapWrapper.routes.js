@@ -40,7 +40,7 @@ router.get("/con-rol", validateGetUsuarios, async (req, res) => {
 });
 router.get("/:id_usuario", async (req, res) => {
     const { id_usuario } = req.params;
-    const response = await soapUsuarioService.obtenerUsuario({ idUsuario: id_usuario });
+    const response = await soapUsuarioService.obtenerUsuario({ id_usuario });
     
     try{
         res.json(JSON.parse(response.response));
@@ -57,7 +57,9 @@ router.post("/", validateCreateUsuario, async (req, res) => {
     }
 });
 router.put("/:id_usuario", validateUpdateUsuario, async (req, res) => {
-    const response = await soapUsuarioService.actualizarUsuario({ idUsuario: req.params.id_usuario, data: req.body });
+    const { id_usuario } = req.params;
+
+    const response = await soapUsuarioService.actualizarUsuario({ id_usuario, data: req.body });
     try{
         res.json(JSON.parse(response.response));
     }catch(error){
@@ -87,7 +89,7 @@ router.delete("/:id_usuario/rol", validateUnassignRolUsuario, async (req, res) =
 });
 router.delete("/:id_usuario", validateDeleteUsuario, async (req, res) => {
     const { id_usuario } = req.params;
-    const response = await soapUsuarioService.eliminarUsuario({ idUsuario: id_usuario });
+    const response = await soapUsuarioService.eliminarUsuario({ id_usuario});
     
     try{
         res.json(JSON.parse(response.response));

@@ -14,6 +14,8 @@ export const soapAsistenciaService = {
             itemsArray = items.item;
         } else if (items.item) {
             itemsArray = [items.item]; // si solo vino un item
+        } else if(Array.isArray(items)) {
+            itemsArray = items;
         } else {
             return { response: { error: "No hay items para procesar" } };
         }
@@ -64,6 +66,8 @@ export const soapAsistenciaService = {
                 estado_nombre: a.AsistenciaEstado?.descripcion,
                 alumno_id: a.Alumno?.id_alumno,
                 alumno_nombre: `${a.Alumno?.usuario?.apellido || ""} ${a.Alumno?.usuario?.nombre || ""}`.trim(),
+                alumno_apellido: a.Alumno?.usuario?.apellido,
+                alumno_nombre_prop: a.Alumno?.usuario?.nombre,
                 curso_anio: a.Alumno?.curso?.anio_escolar,
                 curso_division: a.Alumno?.curso?.division,
             }));

@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     }
 });
 router.post("/", async (req, res) => {
-    const response = await soapInformePedagogicoService.crearInformePedagogico(req.body);
+    const response = await soapInformePedagogicoService.crearInformePedagogico({ usuario: req.usuario,...req.body});
 
     try{
         res.json(JSON.parse(response.response));
