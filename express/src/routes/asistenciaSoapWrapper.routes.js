@@ -10,6 +10,7 @@ router.use(authMiddleware);
 
 // Registro en lote
 router.post("/curso", async (req, res) => {
+    
     const response = await soapAsistenciaService.tomarAsistenciaCurso(req.body);
 
     try{

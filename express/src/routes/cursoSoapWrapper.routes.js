@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/restricted", async (req, res) => {
-    const response = await soapCursoService.obtenerCursosRestringido({});
+    const response = await soapCursoService.obtenerCursosRestringido(req);
 
     try{
         res.json(JSON.parse(response.response));
@@ -44,7 +44,7 @@ router.get("/:id", async (req, res) => {
 // GET /api/cursos/:id/materias
 router.get("/:id/materias", async (req, res) => {
     const { id } = req.params;
-    const response = await soapCursoService.obtenerMateriasPorCurso({ id });
+    const response = await soapCursoService.obtenerMateriasPorCurso({ id_curso: id, usuario: req.usuario });
 
     try{
         res.json(JSON.parse(response.response));
@@ -56,7 +56,7 @@ router.get("/:id/materias", async (req, res) => {
 // GET /api/cursos/:id/alumnos
 router.get("/:id/alumnos", async (req, res) => {
     const { id } = req.params;
-    const response = await soapCursoService.obtenerAlumnosPorCurso({ id });
+    const response = await soapCursoService.obtenerAlumnosPorCurso({ id_curso: id });
 
     try{
         res.json(JSON.parse(response.response));
@@ -68,7 +68,7 @@ router.get("/:id/alumnos", async (req, res) => {
 // GET /api/cursos/:id/docentes
 router.get("/:id/docentes", async (req, res) => {
     const { id } = req.params;
-    const response = await soapCursoService.obtenerDocentesPorCurso({ id });
+    const response = await soapCursoService.obtenerDocentesPorCurso({ id_curso: id });
 
     try{
         res.json(JSON.parse(response.response));

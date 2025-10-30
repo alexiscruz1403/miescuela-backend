@@ -13,14 +13,7 @@ export const soapAsesorPedagogicoService = {
                 ]
             });
 
-            const data = asesores.map(a => ({
-                id_asesor: a.id_asesor,
-                nombre: a.usuario?.nombre,
-                apellido: a.usuario?.apellido,
-                email: a.usuario?.email
-            }));
-
-            return { response: JSON.stringify(data) };
+            return { response: JSON.stringify(asesores) };
         } catch (error) {
         console.error("Error obteniendo asesores pedagógicos SOAP:", error);
         return { response: "Error interno al obtener asesores pedagógicos" };
